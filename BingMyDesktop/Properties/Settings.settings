@@ -17,5 +17,8 @@
     <Setting Name="bingPort" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">80</Value>
     </Setting>
+    <Setting Name="BackupPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\rnord\Pictures\Bing Wallpapers</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

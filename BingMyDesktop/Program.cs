@@ -34,9 +34,13 @@ namespace BingMyDesktop
                 var oldFileInfo = new FileInfo(newImageFinalFullPath);
                 try
                 {
-                    oldFileInfo.MoveTo(Path.Combine(oldFileInfo.Directory.FullName,
-                                                    oldFileInfo.Name.Substring(0, oldFileInfo.Name.LastIndexOf('.')) + "_" +
-                                                    oldFileInfo.CreationTime.ToString("yyyyMMdd") + ".jpg"));
+                    const string NewFileNameFormat = "{0}_{1:yyyyMMdd}.jpg";
+                    var oldFileNewPlaceFullPath = Path.Combine(Settings.Default.BackupPath,
+                                                               string.Format(NewFileNameFormat,
+                                                                             Path.GetFileNameWithoutExtension(oldFileInfo.FullName),
+                                                                             oldFileInfo.LastWriteTime));
+
+                    oldFileInfo.MoveTo(oldFileNewPlaceFullPath);
                 }
                 catch (IOException)
                 {

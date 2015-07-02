@@ -70,7 +70,7 @@ namespace BingMyDesktop.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\rnord\\Pictures\\Bing Wallpapers")]
+        [global::System.Configuration.DefaultSettingValueAttribute("%mypictures%")]
         public string BackupPath {
             get {
                 return ((string)(this["BackupPath"]));

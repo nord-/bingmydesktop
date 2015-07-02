@@ -18,7 +18,7 @@
       <Value Profile="(Default)">80</Value>
     </Setting>
     <Setting Name="BackupPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Users\rnord\Pictures\Bing Wallpapers</Value>
+      <Value Profile="(Default)">%mypictures%</Value>
     </Setting>
   </Settings>
 </SettingsFile>

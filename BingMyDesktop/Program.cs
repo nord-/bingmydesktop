@@ -28,7 +28,9 @@ namespace BingMyDesktop
             }
 
             var newImageFinalFullPath = Path.Combine(imageFinalRestingPlace, imageFileInfo.Name);
-            if (File.Exists(newImageFinalFullPath))
+            var backupPath = GetBackupPath();
+
+            if (File.Exists(newImageFinalFullPath) && !string.IsNullOrWhiteSpace(backupPath) && Directory.Exists(backupPath))
             {
                 // rename to back-up name
                 var oldFileInfo = new FileInfo(newImageFinalFullPath);
@@ -58,6 +60,25 @@ namespace BingMyDesktop
             Console.WriteLine("File moved to {0}.", imageFileInfo.FullName);
 #endif
             return imageFileInfo;
+        }
+
+        private static string GetBackupPath()
+        {
+            const string MY_PICTURE_REPLACE_TEXT = "%mypictures%";
+            const string BING_FOLDER = "Bing Wallpapers";
+
+            var backupPath = Settings.Default.BackupPath ?? "";
+            if (string.IsNullOrWhiteSpace(backupPath) || !backupPath.Contains(MY_PICTURE_REPLACE_TEXT)) 
+                return backupPath;
+
+
+            backupPath = backupPath.Replace(MY_PICTURE_REPLACE_TEXT, Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
+            backupPath = Path.Combine(backupPath, BING_FOLDER);
+
+            if (!Directory.Exists(backupPath))
+                Directory.CreateDirectory(backupPath);
+
+            return backupPath;
         }
 
         private static string GetImageFileNameFullPath()

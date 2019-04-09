@@ -30,7 +30,11 @@ namespace BingMyDesktop
             var newImageFinalFullPath = Path.Combine(imageFinalRestingPlace, imageFileInfo.Name);
             var backupPath = GetBackupPath();
 
-            if (File.Exists(newImageFinalFullPath) && !string.IsNullOrWhiteSpace(backupPath) && Directory.Exists(backupPath))
+            var newImageFileIsDownloaded = File.Exists(newImageFinalFullPath);
+            var backupPathIsSetInConfig = !string.IsNullOrWhiteSpace(backupPath);
+            var backupPathExists = Directory.Exists(backupPath);
+
+            if (newImageFileIsDownloaded && backupPathIsSetInConfig && backupPathExists)
             {
                 // rename to back-up name
                 var oldFileInfo = new FileInfo(newImageFinalFullPath);
@@ -72,8 +76,10 @@ namespace BingMyDesktop
                 return backupPath;
 
 
-            backupPath = backupPath.Replace(MY_PICTURE_REPLACE_TEXT, Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
-            backupPath = Path.Combine(backupPath, BING_FOLDER);
+            var myPicturesPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            backupPath = backupPath.Replace(MY_PICTURE_REPLACE_TEXT, myPicturesPath);
+            if (backupPath == myPicturesPath)
+                backupPath = Path.Combine(backupPath, BING_FOLDER);
 
             if (!Directory.Exists(backupPath))
                 Directory.CreateDirectory(backupPath);

@@ -94,13 +94,14 @@ namespace BingMyDesktop
                 dynamic result = JsonConvert.DeserializeObject(response);
                 var bgImageUri = new UriBuilder(Settings.Default.bingScheme,
                                                 Settings.Default.bingBase,
-                                                Settings.Default.bingPort,
-                                                result.images[0].url.ToString());
+                                                Settings.Default.bingPort);
 
-                Console.WriteLine("Getting {0}", bgImageUri);
+                var imageUrlAsString = $"{bgImageUri.Uri.ToString()}{result.images[0].url.ToString()}";
+
+                Console.WriteLine("Getting {0}", imageUrlAsString);
 
                 imageFileNameFullPath = Path.Combine(Path.GetTempPath(), "BingMyDesktop.jpg");
-                client.DownloadFile(bgImageUri.Uri, imageFileNameFullPath);
+                client.DownloadFile(imageUrlAsString, imageFileNameFullPath);
 
 #if DEBUG
                 Console.WriteLine("File downloaded to {0}.", imageFileNameFullPath);
